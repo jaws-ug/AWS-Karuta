@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no" >
+<head><title>AWS Karuta Ver.20170311</title></head>
+<style type="text/css"><!--
+button {
+	font-size: 300%;
+	font-family: sans-serif;
+	padding: 10px 0;
+	margin: 10px 0;
+	border: 1px solid #DDD;
+	color: #111;
+	background: -moz-linear-gradient(top,#FFF 0%,#EEE);
+	background: -webkit-gradient(linear,left top,left bottom,from(#FFF),to(#EEE));
+}
+div {
+	word-wrap:break-all;
+	font-size: 100%;
+	font-family: sans-serif;
+	background-color: #ffffcc;
+	padding: 20px;
+	border: 1px solid #f0f0f0;
+	box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+	border-radius: 5px;
+}
+img {
+	width: 40%;
+	height: 40%;
+}
+#fwd {
+	position:absolute;
+	right:10px;
+}
+//--></style>
+<body onload="init();fwd();">
+<script>
+function $(id){return document.getElementById(id);};
+
+var mx = 78;
+var ar = new Array();
+var rnd, unq, seq;
+var currentNo;
+function init(){
+	currentNo = 0;
+	seq = 0;
+	for(var i = 0; i < mx; i++){
+		$("f" + i).style.display = "none";
+		$("i" + i).style.display = "none";
+
+		unq = false;
+		while(!unq){
+			rnd = Math.floor(Math.random() * mx);
+			for (var j in ar){
+				unq = (ar[j] == rnd) ? false : true;
+				if(!unq) break;
+			}
+			ar[i] = unq ? rnd : null;
+		}
+	}
+}
+
+function rev(){
+	if(seq == 1) return;
+	$("f" + ar[seq - 1]).style.display = "none";
+	$("i" + ar[seq - 1]).style.display = "none";
+	$("f" + ar[seq - 2]).style.display = "";
+	$("i" + ar[seq - 2]).style.display = "";
+	--seq;
+	--currentNo;
+	dispCurrent();
+}
+
+function fwd(){
+	if(seq == mx) return;
+	$("f" + ar[seq]).style.display = "";
+	$("i" + ar[seq]).style.display = "";
+
+	if (seq != 0) {
+		$("f" + ar[seq - 1]).style.display = "none";
+		$("i" + ar[seq - 1]).style.display = "none";
+	}
+	seq++;
+	currentNo++;
+	dispCurrent();
+}
+
+function dispCurrent() {
+	$("current").innerHTML = currentNo + "/" + mx;
+}
+</script>
+<button id="rev" onclick="rev()"><<戻る</button>
+<button id="fwd" onclick="fwd()">次へ>></button>
+<div id="current"></div>
+
+<div id="f0">オンプレミスのデータセンターで実行されているアプリケーション、関連する依存関係を検出するサービス。 -- AWS Application Discovery Service</div>
+<div id="f1">AWSのコンプライアンスレポートにオンデマンドでアクセスできる無料のセルフサービスポータル。 -- AWSArtifact</div>
+<div id="f2">バッチジョブのコードを簡単にパッケージ化し、その依存関係を指定できるサービス。実行パラメータとジョブ依存関係を指定でき、バッチコンピューティングワークフローでよく使用されるさまざまなエンジンや言語 (Pegasus WMS、Luigi、AWS Step Functions など) との統合を簡単に行うことができる。 -- AWS Batch</div>
+<div id="f3">AWS の各種サービスで使用する Secure Sockets Layer/Transport Layer Security (SSL/TLS) 証明書のプロビジョニング、管理、およびデプロイを簡単に行えるサービス。 -- AWS Certificate Manager</div>
+<div id="f4">テンプレートを利用することで、AWSのインフラやリソースを集約し、スタックとしてデプロイすることができるサービス。 -- AWS CloudFormation</div>
+<div id="f5">安全なキー管理に対する米国政府標準規格に適合するように設計/検証されたハードウェアセキュリティモジュールで暗号キーを保護することができる。 -- AWS CloudHSM</div>
+<div id="f6">AWS APIに対するコールを記録し、指定したS3バケットにログファイルを保存することができる機能。ログファイルが保存されるたびに、Amazon SNSのトピックに通知を送ることができる。 -- AWS CloudTrail</div>
+<div id="f7">完全マネージド型のビルドサービス。ビルドサーバーのプロビジョニング、管理、スケーリングが不要。スケーリングは継続的に行われ、複数のビルドが同時に実行される。 -- AWS CodeBuild</div>
+<div id="f8">企業が安全で高度にスケーラブルなプライベート Git リポジトリをホストすることを容易にする、完全マネージド型のソース管理サービス。 -- AWS CodeCommit</div>
+<div id="f9">EC2インスタンスへのコードのデプロイメント、アップデートを自動化するサービスで、アプリケーションの複雑なアップデート処理、デプロイ中のダウンタイムの回避、新規機能の迅速なリリースを容易に行なうことを可能とする。 -- AWS CodeDeploy</div>
+<div id="f10">迅速で信頼性の高いアプリケーションのアップデートを可能にする継続的デリバリーサービス。コードが変更されるたびに、定義したリリースプロセスモデルに基づいて、コードを構築、テスト、デプロイができる。 -- AWS CodePipeline</div>
+<div id="f11">AWSが提供する様々なサービスの構成管理、履歴管理を実現するサービス。AWS上にある構成アイテムのリソース変更状況をS3上にログとして記録して、リソースの構成変更履歴を時系列で参照することができる。 -- AWS Config</div>
+<div id="f12">Oracle から Oracle のような同種のデータベース間の移行や、Oracle から Amazon Aurora または Microsoft SQL から MySQL といった異なるデータベースプラットフォーム間のデータ移行ツール。 -- AWS DMS(Database Migration Service)</div>
+<div id="f13">AWSの各サービス、ならびにオンプレミスのデータソース間を、指定された間隔で、データ処理やデータ移動ができる、データドリブンなオーケストレーションサービス。 -- AWS Data Pipeline</div>
+<div id="f14">Android、iOS および Fire OS アプリケーションのテストサービス。 -- AWS Device Farm</div>
+<div id="f15">ユーザとAWSのネットワークを専用線で接続するためのサービス。 -- AWS Direct Connect</div>
+<div id="f16">AWS リソースを既存のオンプレミス Microsoft Active Directory で接続したり、AWS クラウド上に新しいスタンドアロンなディレクトリをセットアップしたりできる管理型サービス。 -- AWS Directory Service</div>
+<div id="f17">gitやIDEを使い、AWSクラウド上に、アプリケーション実行環境を迅速に、簡単にデプロイするためのサービス。 -- AWS Elastic Beanstalk</div>
+<div id="f18">接続されたデバイスでローカルのコンピューティング、メッセージング、およびデータキャッシュを安全に実行できるようにするソフトウェア。接続されたデバイスで AWS Lambda 関数を実行し、デバイスデータを常に同期させ、他のデバイスと安全に通信できる。 -- AWS Greengrass</div>
+<div id="f19">接続されたデバイスが簡単かつ安全にクラウドアプリケーションやその他のデバイスとやり取りできるマネージド型クラウドプラットフォーム。数十億のデバイスと数兆のメッセージをAWSエンドポイントおよび他のデバイスに確実かつ安全に処理しルーティングする。 -- AWS IoT</div>
+<div id="f20">データの暗号化に使用する暗号化キーを簡単に作成および管理できるマネージドサービス。 -- AWS KMS(Key Management Service)</div>
+<div id="f21">EC2インスタンスの準備をせずに、クラウド上でアプリケーションをビルドして実行するための、管理不要なコンピューティングプラットフォーム。S3やKinesis、DynamoDBのイベントをトリガーに、ユーザーが用意したコードを自動的に実行する。 -- AWS Lambda</div>
+<div id="f22">ITILフレームワークに基づいて、AWSの運用管理が行えるサービス。主に大企業向け。 -- AWS Managed Services</div>
+<div id="f23">モバイルアプリケーションを構築するための新しいコンソール。ユーザー認証、データストレージ、バックエンドのロジック、プッシュ通知、コンテンツ配信、および分析などの機能をアプリケーションを構築できる。 -- AWS Mobile Hub</div>
+<div id="f24">Chefレシピを利用して設定が可能なDevOpsソリューションサービス。各種リソースをレイヤーという論理的なモデルで管理する。 -- AWS OpsWorks</div>
+<div id="f25">複数のアカウントを一元的に管理でき、セキュリティと自動化の設定管理が簡単になるサービス。それぞれのアカウントから利用できる AWS のサービスを管理でき、新規アカウント作成の自動化や請求の簡素化もできる。 -- AWS Organizations</div>
+<div id="f26">オンプレミスワークロードを従来よりも簡単に、かつ短時間で AWS に移行できるエージェントレスサービス。ライブサーバーのボリュームの増分レプリケーションを自動化、スケジュール設定、追跡できるため、大規模なサーバーの移行を簡単に処理することができる。 -- AWS SMS(Server Migration Service)</div>
+<div id="f27">IT管理者が内部のユーザに対して、一貫性と統制を管理された形でAWS上のサービスを提供するためのツール。管理者は、各アプリケーションまたは AWS リソースにアクセスできるユーザーを制御して、組織のビジネスポリシーへのコンプライアンスを実施できる。 -- AWS Service Catalog</div>
+<div id="f28">マネージド型の分散サービス妨害 (DDoS) に対する保護サービスで、AWS で実行しているウェブアプリケーションを保護。アプリケーションのダウンタイムとレイテンシーを最小限に抑える常時稼働の検出と自動インライン緩和策を提供しているため、DDoS 保護のメリットを受けるために AWS サポートに従事する必要がない。 -- AWS Shield</div>
+<div id="f29">物理的な移動のためのセキュアなストレージアプライアンスを使用して、テラバイトからペタバイト規模のデータを AWS内外へデータ転送するソリューション。 -- AWS Snowball</div>
+<div id="f30">視覚的なワークフローを使用して分散アプリケーションとマイクロサービスのコンポーネントを簡単に調整できるサービス。複数のステップからなるアプリケーションをシンプルに構築および実行できるようになる。 -- AWS Step Functions</div>
+<div id="f31">オンプレミスのIT環境やAmazon EC2とAWSのストレージインフラをシームレスに統合する仕組み。iSCSIで接続可能な仮想ストレージを提供する。 -- AWS Storage Gateway</div>
+<div id="f32">ユーザーのAWS 環境を検査し、コスト削減、システムパフォーマンス向上、セキュリティギャップの封鎖につながる推奨事項をお知らせします。コスト最適化、セキュリティ、耐障害性、パフォーマンス改善の4 つのカテゴリに分けてすばやく確認できます。 -- AWS Trusted Advisor</div>
+<div id="f33">定義する条件に基づきウェブリクエストを許可、ブロック、または監視 (カウント) するルールを設定し、ウェブアプリケーションを攻撃から保護するのを助けるウェブアプリケーションファイアウォール。 -- AWS WAF(Web Application Firewall)</div>
+<div id="f34">製品や分散アプリケーションの分析およびデバッグを行うサービス。開発中か本番環境かにかかわらず、3 層のシンプルなアプリケーションから数千のサービスで構成される複雑なマイクロサービスアプリケーションまで、さまざまなアプリケーションを分析できる。 -- AWSX-Ray</div>
+<div id="f35">PI の配布、保守、監視、保護が行える、全面的に管理されたサービス。バックエンドからのデータ、ビジネスロジック、機能にアクセスする、アプリケーションの玄関として振る舞う API を作成できる。 -- Amazon API Gateway</div>
+<div id="f36">クラウド上から高品質でリッチな画像を使ったアプリケーションのストリーミングを可能にする。 -- Amazon AppStream</div>
+<div id="f37">インタラクティブなクエリサービスで、Amazon S3 内のデータを標準的な SQL を使用して簡単に分析できる。 -- Amazon Athena</div>
+<div id="f38">エッジロケーションのグローバルなネットワークを利用し、静的コンテンツやストリーミングコンテンツを高パフォーマンスに配信をするサービス。 -- Amazon CloudFront</div>
+<div id="f39">フルマネージド型の「検索サービス」。高速で拡張性に優れた検索機能をアプリケーションに容易に統合できる。 -- Amazon CloudSearch</div>
+<div id="f40">AWSクラウドのリソースと、AWS上で実行するアプリケーションをモニタリングできるサービス。利用料金の監視もできる。 -- Amazon CloudWatch</div>
+<div id="f41">ユーザー認証機能だけでなく、データ同期に関する機能を提供するシンプルなサービスで、モバイルデバイス間でユーザーのアプリケーションデータを安全に管理また同期するのに役立つ。 -- Amazon Cognito</div>
+<div id="f42">フルマネージド型の NoSQL データベースサービス。秒間の読み書き性能を「ユニット」という単位で指定でき、必要に応じていつでも変更することができる。 -- Amazon DynamoDB</div>
+<div id="f43">クラウド内で規模の変更が可能なコンピュータ処理能力を提供するウェブサービス。管理者アクセスが可能な仮想マシンとして提供される。 -- Amazon EC2(Elastic Compute Cloud)</div>
+<div id="f44">Docker コンテナイメージを簡単に保存、管理、デプロイできる完全マネージド型の Docker コンテナレジストリ。 Amazon EC2 Container Service (ECS) に統合されている。 -- Amazon ECR(EC2 Container Registry)</div>
+<div id="f45">Docker コンテナをサポートするコンテナ管理サービス。Amazon EC2 インスタンスのマネージド型クラスターでのアプリケーションの実行を容易にする。 -- Amazon ECS(EC2 Container Service)</div>
+<div id="f46">ストレージ容量を自動的に拡大および縮小できるNetwork File System バージョン4 プロトコルをサポートしたファイルストレージサービス。 -- Amazon EFS(Elastic File System)</div>
+<div id="f47">EC2およびS3を利用してホストされる Hadoopクラスタフレームワークのサービス。莫大な量のデータ処理を、簡単に、費用対効果が高く、利用することができる -- Amazon EMR(Elastic MapReduce)</div>
+<div id="f48">Elasticsearchクラスターを簡単にデプロイ、操作、スケーリングできるようにするマネージドサービス。 -- Amazon ES(Elasticsearch Service)</div>
+<div id="f49">データアクセスをメモリ上にキャッシュすることでアプリケーションのパフォーマンスを向上させる memcached や Redis に準拠しているキャッシュサービス。 -- Amazon ElastiCache</div>
+<div id="f50">高度なスケーラビリティ、使いやすさ、経済性を実現するクラウドの音声・動画変換サービス。音声・動画ファイルをスマートフォン、タブレット、PC などのデバイスで再生可能なバージョンに変換できる。音声のみのストリームを作成するために、ビデオファイルから音声を抜き出すこともできる。 -- Amazon Elastic Transcoder</div>
+<div id="f51">セッションベースのマルチプレイヤーゲーム専用のゲームサーバーをデプロイ、運用、スケーリングするためのマネージドサービス。サーバーインフラストラクチャの管理、キャパシティーのスケールによるレイテンシーとコストの削減、利用可能なゲームセッションへのプレイヤーの適合、分散サービス妨害 (DDoS) 攻撃からの防御が簡単になる。 -- Amazon GameLift</div>
+<div id="f52">アクセス頻度の低いデータや、取り出しに数時間かかっても問題ないデータに合わせて最適化された、低コストのオンラインストレージサービス。API経由のアクセス以外に、Amazon S3と連携することで、Management Console からデータを管理することも可能である。 -- Amazon Glacier</div>
+<div id="f53">AWS にデプロイされたアプリケーションのセキュリティとコンプライアンスを向上させるための、自動化されたセキュリティ評価サービス。 -- Amazon Inspector</div>
+<div id="f54">ビッグデータのリアルタイム・ストリームを扱うために設計されたマネージドサービス。大規模でリアルタイムなデータ投入と処理が必要とされる、あらゆる場面で使うことができる。 -- Amazon Kinesis</div>
+<div id="f55">音声やテキストを使用した会話型インターフェイスをさまざまなアプリケーションに構築するためのサービス。自動音声認識 (ASR) という音声をテキストに変換するための高度な深層学習機能と、テキストの意図を理解するための自然言語理解 (NLU) を利用でき、非常に魅力的なサービスと生き生きとした音声対話を実現するアプリケーションを構築できる。 -- Amazon Lex</div>
+<div id="f56">数回クリックしてメニューから設定を選択し、SSDベースのストレージ、DNS管理、固定IPが事前設定された仮想マシンを起動することができるVPSサービス。 -- Amazon Lightsail</div>
+<div id="f57">予測アプリケーションを構築できる機械サービス。既存データからパターンを発見し、新しいデータから予測を生成する。 -- Amazon Machine Learning</div>
+<div id="f58">有能な人材を必要とする仕事のためのクラウドソーシングマーケットプレイス。クラウド内での柔軟なオンデマンドの労働力を提供。 -- Amazon Mechanical Turk</div>
+<div id="f59">アプリケーションの使用状況データを簡単かつ費用対効果に優れた方法で収集、分析できるようにするサービス。収集したデータはマネジメントコンソールから確認だけでなくS3やRedshiftへ自動で出力することができる。モバイルアプリケーションのDAU、MAU、セッション数などだけでなくカスタムイベントも取得することもできる。 -- Amazon Mobile Analytics</div>
+<div id="f60">モバイルアプリケーション向けのターゲットプッシュ通知サービス。ユーザーの行動を把握し、ターゲットにするユーザーや送信するメッセージを決定し、メッセージを配信する最適な時間を計画し、キャンペーン開始後にキャンペーンの結果を追跡。 -- Amazon Pinpoint</div>
+<div id="f61">文章をリアルな音声に変換するサービス。会話機能を搭載したアプリケーションを作成し、音声に対応したまったく新しいカテゴリの製品を構築することが可能。 -- Amazon Polly</div>
+<div id="f62">PICE エンジンを活用したビジネスインテリジェンス (BI) サービス。可視化の構築、アドホック分析の実行およびデータからビジネスインサイトを迅速に得ることを容易とする。 	-- Amazon QuickSight</div>
+<div id="f63">フルマネージド型のRDBMSサービス。必要に応じてコンピュートリソースやストレージ容量を拡張できる柔軟性や、煩わしい管理作業を軽減する自動バックアップやパッチ当て機能により、利用者はアプリケーションの開発やビジネスに集中できる。MySQL、Oracle Database、SQLServer、PostgreSQLが利用できる。 -- Amazon RDS(Relational Database Service)</div>
+<div id="f64">フルマネージド型のデータウェアハウスサービス。クラスター構成を用いて、ペタバイト級のデータセットに対して高いクエリ性能を実現する。 -- Amazon Redshift</div>
+<div id="f65">画像の分析をアプリケーションに簡単に追加できるようにするサービス。APIで深層学習に基づく高度な視覚検索やイメージ分析をアプリケーションにすばやく組み込むことができる。 -- Amazon Rekognition</div>
+<div id="f66">稼働率100%のサービスレベルアグリーメントが適用されているDNSサービス。 -- Amazon Route53</div>
+<div id="f67">いつでも、ウェブ上のどこからでも容量に関係なくデータを格納・取得できる耐久性に優れたオンライン・ストレージサービス。静的なウェブサイトのホスティングも可能。 -- Amazon S3(Simple Storage Service)</div>
+<div id="f68">年間10億通を送ると言われているAmazon.comが培ったEメールインフラストラクチャのノウハウを利用することができる、非常に拡張性が高くコスト効率の良い大量Eメール送信サービス 。 -- Amazon SES(Simple Email Service)</div>
+<div id="f69">HTTP通知やEメール通知、SMS通知やAmazon SQSへの通知ができるサービス。アプリケーションからアプリケーション、人へのメッセージの迅速な配信環境を実現できる。 -- Amazon SNS(Simple Notification Service)</div>
+<div id="f70">AWSで一番最初にリリースされたサービスで、コンピュータ間でメッセージを移動する際に、それらを格納するための、信頼性の高い、拡張性のある、キューサービス。 -- Amazon SQS(Simple Queue Service)</div>
+<div id="f71">フルマネージド型の拡張性と耐障害性に優れたアプリケーションを構築するためのワークフローサービス。1つのアプリケーションを構成するさまざまな処理ステップを「タスク」として作成することにより、分散アプリケーションの作業を実行することができる。 -- Amazon SWF(Simple Workflow Service)</div>
+<div id="f72">AWSインフラ内に、仮想ネットワーク環境として、ユーザが制御可能な閉域網を構築できるサービス。 -- Amazon VPC(Virtual Private Cloud)</div>
+<div id="f73">エンタープライズのためのフルマネージド型のセキュアな文書保存と共有サービス。ユーザーは好みのデバイスから、いつでもどこでもクラウド上に保存されているファイルにアクセスし、表示してフィードバックを残すことがでる。当初はAmazon Zocaloという名称で発表された。 -- Amazon WorkDocs</div>
+<div id="f74">エンタープライズのためのフルマネージド型のセキュアなメールおよびカレンダーサービス。既存の Active DirectoryやAWS Directory Serviceでユーザ情報を管理することも可能。Microsoft Outlook、Webブラウザ、iOS および Android ネイティブの Eメールアプリケーションを使用して、E メール、連絡先、カレンダーにシームレスにアクセスできる。 -- Amazon WorkMail</div>
+<div id="f75">クラウドで実現されるデスクトップコンピューティング。PC、スマートフォン、タブレットなどあらゆるデバイスからアクセス可能で、すべてのデバイスで同期する。ユーザディスク領域は、定期的にS3にバックアップされる。 -- Amazon WorkSpaces</div>
+<div id="f76">受信アプリケーショントラフィックを複数の Amazon EC2 インスタンス間で、自動的に分散。アプリケーションの耐障害性を実現し、アプリケーショントラフィックのルーティングに必要な負荷分散能力をシームレスに提供。 -- Elastic Load Balancing</div>
+<div id="f77">AWSサービスおよびリソースへのアクセスを安全にコントロールするために、ユーザーとグループを作成および管理し、アクセス権を使用して AWSリソースへのアクセスを許可および拒否できる仕組み。 -- AWS IAM(Identify and Access Management)</div>
+
+<div id="i0"><img src="img/AWSApplicationDiscoveryService.png"/></div>
+<div id="i1"><img src="img/AWSArtifact.png"/></div>
+<div id="i2"><img src="img/AWSBatch.png"/></div>
+<div id="i3"><img src="img/AWSCertificateManager.png"/></div>
+<div id="i4"><img src="img/AWSCloudFormation.png"/></div>
+<div id="i5"><img src="img/AWSCloudHSM.png"/></div>
+<div id="i6"><img src="img/AWSCloudTrail.png"/></div>
+<div id="i7"><img src="img/AWSCodeBuild.png"/></div>
+<div id="i8"><img src="img/AWSCodeCommit.png"/></div>
+<div id="i9"><img src="img/AWSCodeDeploy.png"/></div>
+<div id="i10"><img src="img/AWSCodePipeline.png"/></div>
+<div id="i11"><img src="img/AWSConfig.png"/></div>
+<div id="i12"><img src="img/AWSDMS.png"/></div>
+<div id="i13"><img src="img/AWSDataPipeline.png"/></div>
+<div id="i14"><img src="img/AWSDeviceFarm.png"/></div>
+<div id="i15"><img src="img/AWSDirectConnect.png"/></div>
+<div id="i16"><img src="img/AWSDirectoryService.png"/></div>
+<div id="i17"><img src="img/AWSElasticBeanstalk.png"/></div>
+<div id="i18"><img src="img/AWSGreengrass.png"/></div>
+<div id="i19"><img src="img/AWSIoT.png"/></div>
+<div id="i20"><img src="img/AWSKMS.png"/></div>
+<div id="i21"><img src="img/AWSLambda.png"/></div>
+<div id="i22"><img src="img/AWSManagedServices.png"/></div>
+<div id="i23"><img src="img/AWSMobileHub.png"/></div>
+<div id="i24"><img src="img/AWSOpsWorks.png"/></div>
+<div id="i25"><img src="img/AWSOrganizations.png"/></div>
+<div id="i26"><img src="img/AWSSMS.png"/></div>
+<div id="i27"><img src="img/AWSServiceCatalog.png"/></div>
+<div id="i28"><img src="img/AWSShield.png"/></div>
+<div id="i29"><img src="img/AWSSnowball.png"/></div>
+<div id="i30"><img src="img/AWSStepFunctions.png"/></div>
+<div id="i31"><img src="img/AWSStorageGateway.png"/></div>
+<div id="i32"><img src="img/AWSTrustedAdvisor.png"/></div>
+<div id="i33"><img src="img/AWSWAF.png"/></div>
+<div id="i34"><img src="img/AWSX-Ray.png"/></div>
+<div id="i35"><img src="img/AmazonAPIGateway.png"/></div>
+<div id="i36"><img src="img/AmazonAppStream.png"/></div>
+<div id="i37"><img src="img/AmazonAthena.png"/></div>
+<div id="i38"><img src="img/AmazonCloudFront.png"/></div>
+<div id="i39"><img src="img/AmazonCloudSearch.png"/></div>
+<div id="i40"><img src="img/AmazonCloudWatch.png"/></div>
+<div id="i41"><img src="img/AmazonCognito.png"/></div>
+<div id="i42"><img src="img/AmazonDynamoDB.png"/></div>
+<div id="i43"><img src="img/AmazonEC2.png"/></div>
+<div id="i44"><img src="img/AmazonECR.png"/></div>
+<div id="i45"><img src="img/AmazonECS.png"/></div>
+<div id="i46"><img src="img/AmazonEFS.png"/></div>
+<div id="i47"><img src="img/AmazonEMR.png"/></div>
+<div id="i48"><img src="img/AmazonES.png"/></div>
+<div id="i49"><img src="img/AmazonElasticCache.png"/></div>
+<div id="i50"><img src="img/AmazonElasticTranscoder.png"/></div>
+<div id="i51"><img src="img/AmazonGameLift.png"/></div>
+<div id="i52"><img src="img/AmazonGlacier.png"/></div>
+<div id="i53"><img src="img/AmazonInspector.png"/></div>
+<div id="i54"><img src="img/AmazonKinesis.png"/></div>
+<div id="i55"><img src="img/AmazonLex.png"/></div>
+<div id="i56"><img src="img/AmazonLightsail.png"/></div>
+<div id="i57"><img src="img/AmazonMachineLearning.png"/></div>
+<div id="i58"><img src="img/AmazonMechanicalTurk.png"/></div>
+<div id="i59"><img src="img/AmazonMobileAnalytics.png"/></div>
+<div id="i60"><img src="img/AmazonPinpoint.png"/></div>
+<div id="i61"><img src="img/AmazonPolly.png"/></div>
+<div id="i62"><img src="img/AmazonQuickSight.png"/></div>
+<div id="i63"><img src="img/AmazonRDS.png"/></div>
+<div id="i64"><img src="img/AmazonRedshift.png"/></div>
+<div id="i65"><img src="img/AmazonRekognition.png"/></div>
+<div id="i66"><img src="img/AmazonRoute53.png"/></div>
+<div id="i67"><img src="img/AmazonS3.png"/></div>
+<div id="i68"><img src="img/AmazonSES.png"/></div>
+<div id="i69"><img src="img/AmazonSNS.png"/></div>
+<div id="i70"><img src="img/AmazonSQS.png"/></div>
+<div id="i71"><img src="img/AmazonSWF.png"/></div>
+<div id="i72"><img src="img/AmazonVPC.png"/></div>
+<div id="i73"><img src="img/AmazonWorkDocs.png"/></div>
+<div id="i74"><img src="img/AmazonWorkMail.png"/></div>
+<div id="i75"><img src="img/AmazonWorkSpaces.png"/></div>
+<div id="i76"><img src="img/ElasticLoadBalancing.png"/></div>
+<div id="i77"><img src="img/IAM.png"/></div>
+</body></html>

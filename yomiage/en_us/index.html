@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no" >
+		<meta property="og:title" content="AWS Karuta English ver" />
+		<meta property="og:image" content="img/ogp.jpg" />
+		<title>AWS Karuta English ver</title>
+		<script type="text/javascript" src="audio/audiojs/audio.min.js"></script>
+		<script>
+		  audiojs.events.ready(function() {
+		    var as = audiojs.createAll();
+		  });
+		</script>
+		<script>
+			var mx = 92;
+			var ar = new Array();
+			var rnd, unq, seq;
+			var currentNo;
+
+			// Return ID
+			function $(id){
+				return document.getElementById(id);
+			};
+
+			// Initialize
+			function init(){
+				currentNo = 0;
+				seq = 0;
+				for(var i = 0; i < mx; i++){
+					$("f" + i).style.display = "none";
+					$("a" + i).style.display = "none";
+					$("i" + i).style.display = "none";
+
+					unq = false;
+					while(!unq){
+						rnd = Math.floor(Math.random() * mx);
+						for (var j in ar){
+							unq = (ar[j] == rnd) ? false : true;
+							if(!unq) break;
+						}
+						ar[i] = unq ? rnd : null;
+					}
+				}
+			}
+
+			// Click rev buttun
+			function rev(){
+				if(seq == 1) return;
+				$("f" + ar[seq - 1]).style.display = "none";
+				$("a" + ar[seq - 1]).style.display = "none";
+				$("i" + ar[seq - 1]).style.display = "none";
+				$("f" + ar[seq - 2]).style.display = "";
+				$("a" + ar[seq - 2]).style.display = "";
+				$("i" + ar[seq - 2]).style.display = "";
+				--seq;
+				--currentNo;
+				dispCurrent();
+			}
+
+			//Click fwd buttun
+			function fwd(){
+				if(seq == mx) return;
+				$("f" + ar[seq]).style.display = "";
+				$("a" + ar[seq]).style.display = "";
+				$("i" + ar[seq]).style.display = "none";
+
+				if (seq != 0) {
+					$("f" + ar[seq - 1]).style.display = "none";
+					$("a" + ar[seq - 1]).style.display = "none";
+					$("i" + ar[seq - 1]).style.display = "none";
+				}
+				seq++;
+				currentNo++;
+				dispCurrent();
+			}
+
+			function ClickButtun(id){
+				$("i" + id).style.display = "";
+			}
+
+			//dispCurrent
+			function dispCurrent() {
+				$("current").innerHTML = currentNo + "/" + mx;
+			}
+		</script>
+		<style type="text/css">
+			#rev {
+				width: 40%;
+				font-size: 100%;
+				font-family: sans-serif;
+				padding: 20px 10px;
+				margin: 10px 0;
+				border: 1px solid #DDD;
+				color: #111;
+				background: -moz-linear-gradient(top,#FFF 0%,#EEE);
+				background: -webkit-gradient(linear,left top,left bottom,from(#FFF),to(#EEE));
+			}
+			#fwd {
+				width: 40%;
+				font-size: 100%;
+				font-family: sans-serif;
+				padding: 20px 10px;
+				margin: 10px 0;
+				border: 1px solid #DDD;
+				color: #111;
+				background: -moz-linear-gradient(top,#FFF 0%,#EEE);
+				background: -webkit-gradient(linear,left top,left bottom,from(#FFF),to(#EEE));
+			}
+			
+			div {
+				word-wrap:break-all;
+				font-size: 100%;
+				font-family: sans-serif;
+				background-color: #ffffcc;
+				padding: 10px 20px;
+				margin-right: 10px;
+				margin-left: 10px;
+				border: 1px solid #f0f0f0;
+			/*	border: solid 10px black;*/
+				box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+				border-radius: 5px;
+			}
+			.audio-box{
+				padding: 0px;
+				margin: 0px 10px;
+			}
+			
+			.audiojs{
+				padding: 3px;
+				margin-right: 3px;
+				margin-left: 3px;
+				vertical-align: center;
+			}
+			.audiojs p{
+				width: 40px;
+				height: 40px;
+
+			}
+
+			.audiojs .play-pause {
+				width: 40px;
+				display: inline-block;
+				vertical-align: center;
+			}
+			
+			.audiojs .loaded {
+				width: 70%;
+			  display: inline-block;
+				vertical-align: center;
+				float: right;
+			}
+
+			.audiojs .progress {
+				width: 70%;
+				vertical-align: center;
+			  display: inline-block;
+			}
+
+			.audiojs .scrubber {
+				width: 70%;
+				margin-top: 0px;
+			  display: inline-block;
+				vertical-align: center;
+			}
+			.audiojs .time {
+				width: 15%;
+				float: right;
+			  display: inline-block;
+				vertical-align: center;
+				display: none;
+			}
+
+			.audiojs .play {
+				background: url(img/start.png)center center no-repeat;
+			}
+			.audiojs .pause {
+				background: url(img/stop.png)center center no-repeat;
+			}
+
+			img {
+				width: 40%;
+				height: 40%;
+			}
+			#fwd {
+				position:absolute;
+				right:10px;
+			}
+			.image-box{
+				text-align: center;
+			}
+			#click-buttun{
+				text-align: center;
+				font-size: 100%;
+				border: 1px solid #DDD;
+				color: #111;
+			}
+			#click-buttun input{
+				font-size: 100%;
+			}
+		</style>
+	</head>
+	
+	<body onload="init();fwd();">
+		<button id="rev" onclick="rev()">← Previous</button>
+		<button id="fwd" onclick="fwd()">Next →</button>
+		<div id="current"></div>
+
+		<div id="f0" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a fully managed, secure enterprise storage and sharing service.<p>
+			<p>Users can comment on files, send them to others for feedback, and upload new versions without having to resort to emailing multiple versions of their files as attachments.</p>
+			<p>It was first announced by the name Amazon Zocalo.   -- Amazon WorkDocs</p>	
+		</div>
+		<div id="f1" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a secure, managed business email and calendar service. </p>
+			<p>It gives users the ability to seamlessly access their email, contacts, and calendars using Microsoft Outlook, their web browser, or their native iOS and Android email applications.</p>
+			<p>You can integrate it with your existing corporate directory and control both the keys that encrypt your data and the location in which your data is stored.   -- Amazon WorkMail</p>
+		</div>
+		<div id="f2" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a fully managed, secure desktop computing service which runs on the AWS cloud.</p>
+			<p>It allows you to easily provision cloud-based virtual desktops and provide your users access to the documents, applications, and resources they need from any supported device, including Windows and Mac computers, Chromebooks, iPads, Fire tablets, and Android tablets.</p>
+			<p>The user disk area is backed up in S3 periodically. -- Amazon WorkSpaces</p>
+		</div>
+		<div id="f3" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a web service that makes it easy to quickly and cost-effectively process vast amounts of data.</p>
+			<p>It simplifies big data processing, providing a managed Hadoop framework that makes it easy, fast, and cost-effective for you to distribute and process vast amounts of your data across dynamically scalable Amazon EC2 instances.  -- Amazon Elastic MapReduce(EMR)</p>
+		</div>
+		<div id="f4" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a managed service that makes it easy to deploy, operate, and scale Elasticsearch in the AWS Cloud. -- Amazon Elasticsearch Service</p>
+		</div>
+		<div id="f5" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a service that makes it easy for developers of all skill levels to use machine learning technology. -- Amazon Machine Learning</p>
+		</div>
+		<div id="f6" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a very fast, business intelligence (BI) service that makes it easy to build visualizations, perform ad-hoc analysis, and quickly get business insights from their data. </p>
+			<p>It uses a new, Super-fast, Parallel, In-memory Calculation Engine (“SPICE”) to perform advanced calculations and render visualizations rapidly. - Amazon QuickSight</p>
+		</div>
+		<div id="f7" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a web service that helps you reliably process and move data between different AWS compute and storage services, as well as on-premise data sources, at specified intervals.</p>
+			<p>You can regularly access your data where it’s stored, transform and process it at scale, and efficiently transfer the results to AWS services.- AWS Data Pipeline</p>
+		</div>
+		<div id="f8" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a platform for streaming data on AWS, offering powerful services to make it easy to load and analyze streaming data, and also providing the ability for you to build custom streaming data applications for specialized needs. -Amazon Kinesis</p>
+		</div>
+		<div id="f9" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a fully managed service that makes it easy to create, publish, maintain, monitor, and secure APIs at any scale. </p>
+			<p>With a few clicks in the AWS Management Console, you can create an API that acts as a “front door” for applications to access data, business logic, or functionality from your back-end services, such as workloads running on Amazon Elastic Compute Cloud (Amazon EC2), code running on AWS Lambda, or any Web application. - Amazon API Gateway</p>
+		</div>
+		<div id="f10" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a managed service in the AWS Cloud that makes it simple and cost-effective to set up, manage, and scale a search solution for your website or application. - Amazon CloudSearch</p>
+		</div>
+		<div id="f11" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is media transcoding in the cloud that is highly scalable, easy to use, and a cost effective way  to convert (or “transcode”) media files from their source format into versions that will playback on devices like smartphones, tablets and PCs.</p>
+			<p>You can also create an audio-only alternate stream. -- Amazon Elastic Transcoder</p>
+		</div>
+		<div id="f12" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a cost-effective email service built on the reliable and scalable infrastructure that Amazon.com developed to serve its own customer base. -- Amazon Simple Email Service (Amazon SES)
+			</p>
+		</div>
+		<div id="f13" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a fast, reliable, scalable, fully managed message queuing service.  -- Amazon SQS(Simple Queue Service)</p>
+		</div>
+		<div id="f14" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a fully managed workflow service for building scalable, resilient applications.</p>
+			<p>It acts as the coordination hub for all of the different components of your application. -- Amazon SWF(Simple Workflow Service)</p>
+		</div>
+		<div id="f15" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>This enables you to stream your applications with high-resolution graphics from the cloud.--  Amazon AppStream</p>
+		</div>
+		<div id="f16" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It encourages scalable deployment of applications by providing a web service through which a user can boot an Amazon Machine Image to configure a virtual machine.  --  Amazon EC2(Elastic Compute Cloud)</p>
+		</div>
+		<div id="f17" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>A fully-managed Docker container registry that makes it easy for developers to store, manage, and deploy Docker container images.</p>
+			<p>It can be integrated into Amazon EC2 Container Service (ECS) -- Amazon EC2 Container Registry (ECR)</p></div>
+		<div id="f18" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>A Docker container supported management service. </p>
+			<p>You can easily manage clusters of Amazon Elastic Compute Cloud (Amazon EC2). -- Amazon EC2 Container Service (ECS)</p>
+		</div>
+		<div id="f19" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It has OS and software installed and has the ability to save a disk image of a virtual machine.  -- AmazonMachine Image(AMI)</p>
+		</div>
+		<div id="f20" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>Using git and IDE in the AWS cloud,  it's an easy and quick application deployment service. -- AWS Elastic Beanstalk</p>
+		</div>
+		<div id="f21" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It automatically distributes incoming application traffic across multiple Amazon EC2 instances -- Amazon Elastic Load Balancer(ELB)</p>
+		</div>
+		<div id="f22" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a compute service where you can upload your code and this service can run the code on your behalf using AWS infrastructure. </p>
+			<p>You can easily build data processing triggers for AWS services like Amazon S3 and Amazon DynamoDB.  -- AWS Lambda</p>
+		</div>
+		<div id="f23" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>This service supports homogeneous migrations such as Oracle to Oracle, and also heterogeneous migrations between different database platforms, such as Oracle to MySQL or MySQL to Amazon Aurora.  -- AWS Database Migration Service</p>
+		</div>
+		<div id="f24" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>This service improves the performance of web applications by retrieving information from managed in-memory caches such as memcached or Redis. -- Amazon ElastiCache</p>
+		</div>
+		<div id="f25" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>A full managed RDBMS service.</p>
+			<p>Complex administration processes like patching the database software, backing up databases and enabling point-in-time recovery are managed automatically.</p>
+			<p>It uses MySQL, Oracle Database, SQLServer and PostgreSQL. -- Amazon Relational Database Service(RDS)</p>
+		</div>
+		<div id="f26" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It's a full-managed, petabyte-scale data warehouse service.</p>
+			<p>After you provision your cluster, you can upload your data set and then perform data analysis queries on this.  -- Amazon Redshift</p>
+		</div>
+		<div id="f27" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>Incremental backups on EBS that, when saved to Amazon S3, only the blocks on the device change. -- Amazon EBS Snapshots</p>
+		</div>
+		<div id="f28" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>fully managed NoSQL database service. The seamless reading and writing performance  can be designated as a " unit", and it's possible to change it anytime as the need arises.  -- Amazon DynamoDB</p>
+		</div>
+		<div id="f29" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>A secure, highly scalable, managed source control service that hosts private Git repositories.  -- AWS CodeCommit</p>
+		</div>
+		<div id="f30" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It provides automated code deployment  and updates to EC2 instances. It's able to release a new function easily and quickly while avoiding down time.-- AWS CodeDeploy</p>
+		</div>
+		<div id="f31" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It's a continuous delivery service for fast and reliable application updates.</p>
+			<p>When you change a code, you can build, test, and deploy based on the release process models you define. -- AWS CodePipeline</p>
+		</div>
+		<div id="f32" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>This service is a managed cloud platform that lets connected devices easily and securely interact with cloud applications and other devices. </p>
+			<p>This service can support billions of devices and trillions of messages, and can process and route those messages to AWS endpoints and to other devices reliably and securely. -- AWS IoT</p>
+		</div>
+		<div id="f33" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It can manage a collection of related AWS resources on using templates.</p>
+			<p>It also can deploy and update a template and its associated collection of resources (called a stack)　 -- AWS CloudFormation</p>
+		</div>
+		<div id="f34" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>This records the calls to AWS APIs and has the function capable of saving the log file to the specified S3 bucket. Each time the log file is stored, it is possible to send a notification to Amazon SNS topics. -- AWS CloudTrail</p>
+		</div>
+		<div id="f35" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>Together with AWS cloud resources, this is a service that can monitor the applications that run on AWS. It also can monitor billing. -- Amazon CloudWatch</p>
+		</div>
+		<div id="f36" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>A configuration service that provides you with a AWS resource inventory, configuration history, and configuration change notifications to enable security and governance.</p>
+			<p>The resource inventory changes the status of the configuration items on the S3 log.</p>
+			<p>It is possible to refer to the configuration history of a resource  to view changes in chronological order. -- AWS Config</p>
+		</div>
+		<div id="f37" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>Chef recipes that can be utilized to setup the DevOps solutions services. It manages a logical model of the layers of various resources  -- AWS OpsWorks</p>
+		</div>
+		<div id="f38" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>A new console for developing mobile apps.</p>
+			<p>The user can develop applications such as user authentication, data storage, content delivery, backend logic, analytics dashboards, and push notifications.-- AWS Mobile Hub</p>
+		</div>
+		<div id="f39" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>Not only does it provide user authentication and synchronization of data, this simple service safely synchronizes a users application data between mobile devices. -- Amazon Cognito</p>
+		</div>
+		<div id="f40" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>Test service for Android, iOS, FireOS applications. -- AWS Device Farm</p>
+		</div>
+		<div id="f41" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>With it, you can measure app usage and app revenue. By tracking key trends such as new vs. </p>
+			<p>returning users, app revenue, user retention, and custom in-app behavior events, you can make data-driven decisions to increase engagement and monetization for your app.</p> 
+			<p>You can view key charts in the Mobile Analytics console and automatically export your app event data to Amazon S3 and Amazon Redshift to run custom analysis. -- Amazon Mobile Analytics</p>
+		</div>
+		<div id="f42" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a fast, flexible, fully managed push notification service that lets you send individual messages or to fan-out messages to large numbers of recipients.</p>
+			<p>It makes it simple and cost effective to send push notifications to mobile device users, email recipients or even send messages to other distributed services. -- Amazon Simple Notification Service(SNS)</p>
+		</div>
+		<div id="f43" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It makes it easy to establish a dedicated network connection from your premises to AWS -- AWS Direct Connect(DX)</p>
+		</div>
+		<div id="f44" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It lets you provision a logically isolated section of the Amazon Web Services (AWS) cloud where you can launch AWS resources in a virtual network that you define. -- Amazon Virtual Private Cloud(VPC)</p>
+		</div>
+		<div id="f45" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a highly available and scalable cloud Domain Name System (DNS) web service. -- Amazon Route53</p>
+		</div>
+		<div id="f46" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It helps you meet corporate, contractual and regulatory compliance requirements for data security by using dedicated Hardware Security Module appliances within the AWS cloud.</p>
+			<p>With it, you control the encryption keys and cryptographic operations performed by the Hardware Security Module appliances. -- AWS CloudHSM</p></div>
+		<div id="f47" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It makes it easy to setup and run Microsoft Active Directory (AD) in the AWS cloud, or connect your AWS resources with an existing on-premises Microsoft Active Directory. -- AWS Directory Service</p>
+		</div>
+		<div id="f48" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It enables you to securely control access to AWS services and resources for your users.</p>
+			</p>Using it, you can create and manage AWS users and groups, and use permissions to allow and deny their access to AWS resources. -- AWS Identify and Access Management(IAM)</p>
+		</div>
+		<div id="f49" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a managed service that makes it easy for you to create and control the encryption keys used to encrypt your data, and uses Hardware Security Modules (HSMs) to protect the security of your keys. -- AWS Key Management Service (KMS)</p>
+		</div>
+		<div id="f50" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a fully managed service that provides you with an AWS resource inventory, configuration history, and configuration change notifications to enable security and governance.</p>
+			<p>Config Rules enables you to create rules that automatically check the configuration of AWS resources recorded by it. -- AWS Service Catalog</p>
+		</div>
+		<div id="f51" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>An online resource to help you reduce cost, increase performance, and improve security by optimizing your AWS environment, It provides real time guidance to help you provision your resources following AWS best practices. -- AWS Trusted Advisor</p>
+		</div>
+		<div id="f52" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a web application firewall that helps protect your web applications from common web exploits that could affect application availability, compromise security, or consume excessive resources. -- AWS Web Application Firewall(WAF)</p>
+		</div>
+		<div id="f53" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a service that accelerates transferring large amounts of data into and out of AWS using physical storage appliances, bypassing the Internet. -- AWS Import/Export</p>
+		</div>
+		<div id="f54" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a global content delivery network (CDN) service that accelerates delivery of your websites, APIs, video content or other web assets. -- Amazon CloudFront</p>
+		</div>
+		<div id="f55" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a secure, durable, and extremely low-cost cloud storage service for data archiving and long-term backup. You can access this through the Management Console or Amazon S3 API's to manage data. -- Amazon Glacier</p>
+		</div>
+		<div id="f56" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a simple web service interface that stores and retrieves any amount of data from anywhere on the web. It also provides static website hosting. -- Amazon Simple Storage Service(S3)</p>
+		</div>
+		<div id="f57" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a service connecting an on-premises software appliance with cloud-based storage to provide seamless and secure integration between an organization’s on-premises IT environment and AWS’s storage infrastructure.</p>
+			<p>It can connect to the iSCSI interface which provides virtual storage.-- AWS Storage Gateway</p>
+		</div>
+		<div id="f58" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It's a Network File System version 4 protocol supported elastic file storage service. -- Amazon Elastic File System (EFS)</p>
+		</div>
+		<div id="f59" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>A petabyte-scale data transport solution that uses secure appliances to transfer large amounts of data into and out of the AWS cloud. Using it.</p>
+		</div>
+		<div id="f60" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is an automated security assessment service that helps improve the security and compliance of applications deployed on AWS. -- Amazon Inspector</p>
+		</div>
+		<div id="f61" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a service that lets you easily provision, manage, and deploy Secure Sockets Layer/Transport Layer Security (SSL/TLS) certificates for use with AWS services.-- AWS Certificate Manager</p>
+		</div>
+		<div id="f62" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It can help you ensure that your application always has the right amount of capacity to handle the current traffic demands.</p>
+			<p>It can dynamically increase and decrease capacity as needed. -- Amazon EC2 Auto Scaling</p>
+		</div>
+		<div id="f63" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>This enables you to bid on unused EC2 instances, which can lower your Amazon EC2 costs significantly. -- Amazon EC2 Spot Instance</p>
+		</div>
+		<div id="f64" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a horizontally scaled, redundant, and highly available VPC component that allows communication between instances in your VPC and the Internet. -- Internet Gateway</p>
+		</div>
+		<div id="f65" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>This VPC component refers to the connection between your VPC and your own network. -- Virtua Private Gateway</p>
+		</div>
+		<div id="f66" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It allows you to route traffic between the VPCs using private IP addresses; as if they are part of the same network.-- VPC Peering</p>
+		</div>
+		<div id="f67" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>A collection of resource record sets that Amazon Route 53 hosts.</p>
+			<p> Like a traditional DNS zone file, it represents a collection of records that are managed together under a single domain name.</p>
+			<p>For each public one of these that you create, Amazon Route 53 automatically creates a name server (NS) resource record set and a start of authority (SOA) resource record set. -- Hosted Zone</p>
+		</div>
+		<div id="f68" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>To store an object in Amazon S3, you must create this container.</p>
+			<p>The name you choose must be unique across all existing bucket names in Amazon S3.-- Amazon S3 Bucket</p>
+		</div>
+		<div id="f69" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>Using a network of them around the world, Amazon CloudFront caches copies of your static content close to viewers, lowering latency when they download your objects and giving you the high, sustained data transfer rates needed to deliver large popular objects to end users at scale.-- Amazon CloudFront Edge Locations</p>
+		</div>
+		<div id="f70" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It provides block level storage volumes for use with EC2 instances. It's volumes are attached to an EC2 instance are exposed as storage volumes that persist independently from the life of the instance. -- Amazon Elastic Block Store</p>
+		</div>
+		<div id="f71" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>An audit and compliance portal for on-demand access to download AWS compliance reports and manage select agreements like the Business Associate Addendum and the Nondisclosure Agreement.  --AWSArtifact</p>
+		</div>
+		<div id="f72" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It enables developers, scientists, and engineers to easily and efficiently run hundreds of thousands of batch computing jobs on AWS.  --AWSBatch</p>
+		</div>
+		<div id="f73" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It helps enterprise customers plan migration projects by gathering information about their on-premises data centers like discovering On-Premises Infrastructure, identify server dependencies and measuring server performance.   --AWSApplicationDiscoveryService</p>
+		</div>
+		<div id="f74" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a fully managed build service that compiles source code, runs tests, and produces software packages that are ready to deploy.   --AWSCodeBuild</p>
+		</div>
+		<div id="f75" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is software that lets you run local compute, messaging, data caching, and sync capabilities for connected devices in a secure way.</p>
+			<p>connected devices can run AWS Lambda functions, keep device data in sync, and communicate with other devices securely – even when not connected to the Internet.   --AWSGreengrass</p>
+		</div>
+		<div id="f76" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It provides ongoing management of your AWS infrastructure so you can focus on your applications.</p>
+			<p>By implementing best practices to maintain your infrastructure, It helps to reduce your operational overhead and risk.    --AWSManagedServices</p>
+		</div>
+		<div id="f77" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It offers policy-based management for multiple AWS accounts.</p>
+			<p>You can create groups of accounts and then apply policies to those groups.   --AWSOrganizations</p>
+		</div>
+		<div id="f78" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is an agentless service which makes it easier and faster for you to migrate thousands of on-premises workloads to AWS.</p>
+			<p>It allows you to automate, schedule, and track incremental replications of live server volumes, making it easier for you to coordinate large-scale server migrations.   --AWSServerMigrationService</p>
+		</div>
+		<div id="f79" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a managed Distributed Denial of Service (DDoS) protection service that safeguards web applications running on AWS. There are two tiers of it - Standard and Advanced.  --AWSShield</p>
+		</div>
+		<div id="f80" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It makes it easy to coordinate the components of distributed applications and microservices using visual workflows.</p>
+			<p>It is part of the AWS Serverless Platform, and makes it simple to orchestrate AWS Lambda functions for serverless applications.  --AWSStepFunctions</p>
+		</div>
+		<div id="f81" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It helps developers analyze and debug production, distributed applications, such as those built using a microservices architecture.</p>
+			<p>You can understand how your application and its underlying services are performing to identify and troubleshoot the root cause of performance issues and errors.   --AWSX-Ray</p>
+		</div>
+		<div id="f82" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is an interactive query service that makes it easy to analyze data in Amazon S3 using standard SQL. It is serverless, so there is no infrastructure to manage, and you pay only for the queries that you run.  --AmazonAthena</p>
+		</div>
+		<div id="f83" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a managed service for deploying, operating, and scaling dedicated game servers for session-based multiplayer games.     --AmazonGameLift</p>
+		</div>
+		<div id="f84" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a service for building conversational interfaces into any application using voice and text.   --AmazonLex</p>
+		</div>
+		<div id="f85" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>You can launch a virtual private server (VPS) with just a few clicks.  --AmazonLightsail</p>
+		</div>
+		<div id="f86" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It makes it easy to message users directly from your application or backend service, or run targeted campaigns to drive user engagement.</p>
+			<p>You  can understand user behavior, select the best channel to engage users, determine the most effective messages to send, schedule the best time to deliver the messages, and then track user engagement.    --AmazonPinpoint</p>
+		</div>
+		<div id="f87" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is me. It is a service that turns text into lifelike speech, allowing you to create applications that talk, and build entirely new categories of speech-enabled products.  --AmazonPolly</p>
+		</div>
+		<div id="f88" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a service that makes it easy to add image analysis to your applications with deep learning technology .   --AmazonRekognition</p>
+		</div>
+		<div id="f89" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a communications service that transforms online meetings with a secure, easy-to-use application that you can trust.   --AmazonChime</p>
+		</div>
+		<div id="f90" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a security service that uses machine learning to automatically discover, classify, and protect sensitive data in AWS.</p>
+			<p>It  recognizes sensitive data such as personally identifiable information (PII) or intellectual property, and provides you with dashboards and alerts that give visibility into how this data is being accessed or moved.    --AmazonMacie</p>
+		</div>
+		<div id="f91" class="explanatory-sentences" alt="Explanatory sentences">
+			<p>It is a self-service, cloud-based contact center service that makes it easy for any business to deliver better customer service at lower cost.   --AmzonConnect</p>
+		</div>
+
+		<div class="audio-box" id="a0">
+			<audio src="audio/mp3/AmazonWorkDocs.mp3" />
+		</div>
+		<div class="audio-box" id="a1">
+			<audio src="audio/mp3/AmazonWorkMail.mp3" />
+		</div>
+		<div class="audio-box" id="a2">
+			<audio src="audio/mp3/AmazonWorkSpaces.mp3" />
+		</div>
+		<div class="audio-box" id="a3">
+			<audio src="audio/mp3/Analytics_AmazonEMR.mp3" />
+		</div>
+		<div class="audio-box" id="a4">
+			<audio src="audio/mp3/Analytics_AmazonElasticsearch.mp3" />
+		</div>
+		<div class="audio-box" id="a5">
+			<audio src="audio/mp3/Analytics_AmazonMachineLearning.mp3" />
+		</div>
+		<div class="audio-box" id="a6">
+			<audio src="audio/mp3/Analytics_AmazonQuickSight.mp3" />
+		</div>
+		<div class="audio-box" id="a7">
+			<audio src="audio/mp3/Analytics_DataPipeline.mp3" />
+		</div>
+		<div class="audio-box" id="a8">
+			<audio src="audio/mp3/Analytics_Kinesis.mp3" />
+		</div>
+		<div class="audio-box" id="a9">
+			<audio src="audio/mp3/ApplicationServices_APIGateway.mp3" />
+		</div>
+		<div class="audio-box" id="a10">
+			<audio src="audio/mp3/ApplicationServices_AmazonCloudSearch.mp3" />
+		</div>
+		<div class="audio-box" id="a11">
+			<audio src="audio/mp3/ApplicationServices_AmazonElasticTranscoder.mp3" />
+		</div>
+		<div class="audio-box" id="a12">
+			<audio src="audio/mp3/ApplicationServices_AmazonSES.mp3" />
+		</div>
+		<div class="audio-box" id="a13">
+			<audio src="audio/mp3/ApplicationServices_AmazonSQS.mp3" />
+		</div>
+		<div class="audio-box" id="a14">
+			<audio src="audio/mp3/ApplicationServices_AmazonSWF.mp3" />
+		</div>
+		<div class="audio-box" id="a15">
+			<audio src="audio/mp3/ApplicationServices_AppStream.mp3" />
+		</div>
+		<div class="audio-box" id="a16">
+			<audio src="audio/mp3/Compute_AmazonEC2.mp3" />
+		</div>
+		<div class="audio-box" id="a17">
+			<audio src="audio/mp3/Compute_AmazonEC2ContainerRegistry.mp3" />
+		</div>
+		<div class="audio-box" id="a18">
+			<audio src="audio/mp3/Compute_AmazonEC2ContainerService.mp3" />
+		</div>
+		<div class="audio-box" id="a19">
+			<audio src="audio/mp3/Compute_AmazonEC2_AMI.mp3" />
+		</div>
+		<div class="audio-box" id="a20">
+			<audio src="audio/mp3/Compute_ElasticBeanstalk.mp3" />
+		</div>
+		<div class="audio-box" id="a21">
+			<audio src="audio/mp3/Compute_ElasticLoadBalancing.mp3" />
+		</div>
+		<div class="audio-box" id="a22">
+			<audio src="audio/mp3/Compute_Lambda.mp3" />
+		</div>
+		<div class="audio-box" id="a23">
+			<audio src="audio/mp3/Database_AWSDatabaseMigrationService.mp3" />
+		</div>
+		<div class="audio-box" id="a24">
+			<audio src="audio/mp3/Database_AmazonElasticCache.mp3" />
+		</div>
+		<div class="audio-box" id="a25">
+			<audio src="audio/mp3/Database_AmazonRDS.mp3" />
+		</div>
+		<div class="audio-box" id="a26">
+			<audio src="audio/mp3/Database_AmazonRedShift.mp3" />
+		</div>
+		<div class="audio-box" id="a27">
+			<audio src="audio/mp3/StorageContentDelivery_snapshot.mp3" />
+		</div>
+		<div class="audio-box" id="a28">
+			<audio src="audio/mp3/Database_DynamoDB.mp3" />
+		</div>
+		<div class="audio-box" id="a29">
+			<audio src="audio/mp3/DeploymentManagement_AWSCodeCommit.mp3" />
+		</div>
+		<div class="audio-box" id="a30">
+			<audio src="audio/mp3/DeploymentManagement_CodeDeploy.mp3" />
+		</div>
+		<div class="audio-box" id="a31">
+			<audio src="audio/mp3/DeploymentManagement_CodePipeline.mp3" />
+		</div>
+		<div class="audio-box" id="a32">
+			<audio src="audio/mp3/InternetOfThings_AWS-IOT.mp3" />
+		</div>
+		<div class="audio-box" id="a33">
+			<audio src="audio/mp3/ManagementTools_CloudFormation.mp3" />
+		</div>
+		<div class="audio-box" id="a34">
+			<audio src="audio/mp3/ManagementTools_CloudTrail.mp3" />
+		</div>
+		<div class="audio-box" id="a35">
+			<audio src="audio/mp3/ManagementTools_CloudWatch.mp3" />
+		</div>
+		<div class="audio-box" id="a36">
+			<audio src="audio/mp3/ManagementTools_Config.mp3" />
+		</div>
+		<div class="audio-box" id="a37">
+			<audio src="audio/mp3/ManagementTools_OpsWorks.mp3" />
+		</div>
+		<div class="audio-box" id="a38">
+			<audio src="audio/mp3/MobileServices_AWSMobileHub.mp3" />
+		</div>
+		<div class="audio-box" id="a39">
+			<audio src="audio/mp3/MobileServices_Cognito.mp3" />
+		</div>
+		<div class="audio-box" id="a40">
+			<audio src="audio/mp3/MobileServices_DeviceFarm.mp3" />
+		</div>
+		<div class="audio-box" id="a41">
+			<audio src="audio/mp3/MobileServices_MobileAnalytics.mp3" />
+		</div>
+		<div class="audio-box" id="a42">
+			<audio src="audio/mp3/MobileServices_SNS.mp3" />
+		</div>
+		<div class="audio-box" id="a43">
+			<audio src="audio/mp3/Networking_AWSDirectConnect.mp3" />
+		</div>
+		<div class="audio-box" id="a44">
+			<audio src="audio/mp3/Networking_AmazonVPC.mp3" />
+		</div>
+		<div class="audio-box" id="a45">
+			<audio src="audio/mp3/Networking_Route53.mp3" />
+		</div>
+		<div class="audio-box" id="a46">
+			<audio src="audio/mp3/SecurityIdentity_CloudHSM.mp3" />
+		</div>
+		<div class="audio-box" id="a47">
+			<audio src="audio/mp3/SecurityIdentity_DirectoryService.mp3" />
+		</div>
+		<div class="audio-box" id="a48">
+			<audio src="audio/mp3/SecurityIdentity_IdentityAccessManagement.mp3" />
+		</div>
+		<div class="audio-box" id="a49">
+			<audio src="audio/mp3/SecurityIdentity_KeyManagementService.mp3" />
+		</div>
+		<div class="audio-box" id="a50">
+			<audio src="audio/mp3/ManagementTools_ServiceCatalog.mp3" />
+		</div>
+		<div class="audio-box" id="a51">
+			<audio src="audio/mp3/SecurityIdentity_TrustedAdvisor.mp3" />
+		</div>
+		<div class="audio-box" id="a52">
+			<audio src="audio/mp3/SecurityIdentity_WebAppFirewall.mp3" />
+		</div>
+		<div class="audio-box" id="a53">
+			<audio src="audio/mp3/StorageContentDelivery_AWSIMportExport.mp3" />
+		</div>
+		<div class="audio-box" id="a54">
+			<audio src="audio/mp3/StorageContentDelivery_AmazonCloudFront.mp3" />
+		</div>
+		<div class="audio-box" id="a55">
+			<audio src="audio/mp3/StorageContentDelivery_AmazonGlacier.mp3" />
+		</div>
+		<div class="audio-box" id="a56">
+			<audio src="audio/mp3/StorageContentDelivery_AmazonS3.mp3" />
+		</div>
+		<div class="audio-box" id="a57">
+			<audio src="audio/mp3/StorageContentDelivery_AmazonStorageGateway.mp3" />
+		</div>
+		<div class="audio-box" id="a58">
+			<audio src="audio/mp3/StorageContentDelivery_EFS.mp3" />
+		</div>
+		<div class="audio-box" id="a59">
+			<audio src="audio/mp3/StorageContentDelivery_Snowball.mp3" />
+		</div>
+		<div class="audio-box" id="a60">
+			<audio src="audio/mp3/Security-Identity_AmazonInspector.mp3" />
+		</div>
+		<div class="audio-box" id="a61">
+			<audio src="audio/mp3/SecurityIdentity_CertificateManager.mp3" />
+		</div>
+		<div class="audio-box" id="a62">
+			<audio src="audio/mp3/Compute_AmazonEC2_AutoScaling.mp3" />
+		</div>
+		<div class="audio-box" id="a63">
+			<audio src="audio/mp3/Compute_AmazonEC2_Spotinstance.mp3" />
+		</div>
+		<div class="audio-box" id="a64">
+			<audio src="audio/mp3/Networking_AmazonVPC_internetgateway.mp3" />
+		</div>
+		<div class="audio-box" id="a65">
+			<audio src="audio/mp3/Networking_AmazonVPC_VPNgateway.mp3" />
+		</div>
+		<div class="audio-box" id="a66">
+			<audio src="audio/mp3/Networking_AmazonVPC_VPCpeering.mp3" />
+		</div>
+		<div class="audio-box" id="a67">
+			<audio src="audio/mp3/Networking_AmazonRoute53_hostedzone.mp3" />
+		</div>
+		<div class="audio-box" id="a68">
+			<audio src="audio/mp3/StorageContentDelivery_AmazonS3_bucket.mp3" />
+		</div>
+		<div class="audio-box" id="a69">
+			<audio src="audio/mp3/StorageContentDelivery_AmazonCloudFront_edgelocation.mp3" />
+		</div>
+		<div class="audio-box" id="a70">
+			<audio src="audio/mp3/StorageContentDelivery_AmazonEBS.mp3" />
+		</div>
+		<div class="audio-box" id="a71">
+			<audio src="audio/mp3/AWSArtifact.mp3" />
+		</div>
+		<div class="audio-box" id="a72">
+			<audio src="audio/mp3/AWSBatch.mp3" />
+		</div>
+		<div class="audio-box" id="a73">
+			<audio src="audio/mp3/AWSApplicationDiscoveryService.mp3" />
+		</div>
+		<div class="audio-box" id="a74">
+			<audio src="audio/mp3/AWSCodeBuild.mp3" />
+		</div>
+		<div class="audio-box" id="a75">
+			<audio src="audio/mp3/AWSGreengrass.mp3" />
+		</div>
+		<div class="audio-box" id="a76">
+			<audio src="audio/mp3/AWSManagedServices.mp3" />
+		</div>
+		<div class="audio-box" id="a77">
+			<audio src="audio/mp3/AWSOrganizations.mp3" />
+		</div>
+		<div class="audio-box" id="a78">
+			<audio src="audio/mp3/AWSServerMigrationService.mp3" />
+		</div>
+		<div class="audio-box" id="a79">
+			<audio src="audio/mp3/AWSShield.mp3" />
+		</div>
+		<div class="audio-box" id="a80">
+			<audio src="audio/mp3/AWSStepFunctions.mp3" />
+		</div>
+		<div class="audio-box" id="a81">
+			<audio src="audio/mp3/AWSX-Ray.mp3" />
+		</div>
+		<div class="audio-box" id="a82">
+			<audio src="audio/mp3/AmazonAthena.mp3" />
+		</div>
+		<div class="audio-box" id="a83">
+			<audio src="audio/mp3/AmazonGameLift.mp3" />
+		</div>
+		<div class="audio-box" id="a84">
+			<audio src="audio/mp3/AmazonLex.mp3" />
+		</div>
+		<div class="audio-box" id="a85">
+			<audio src="audio/mp3/AmazonLightsail.mp3" />
+		</div>
+		<div class="audio-box" id="a86">
+			<audio src="audio/mp3/AmazonPinpoint.mp3" />
+		</div>
+		<div class="audio-box" id="a87">
+			<audio src="audio/mp3/AmazonPolly.mp3" />
+		</div>
+		<div class="audio-box" id="a88">
+			<audio src="audio/mp3/AmazonRekognition.mp3" />
+		</div>
+		<div class="audio-box" id="a89">
+			<audio src="audio/mp3/AmazonChime.mp3" />
+		</div>
+		<div class="audio-box" id="a90">
+			<audio src="audio/mp3/AmazonMacie.mp3" />
+		</div>
+		<div class="audio-box" id="a91">
+			<audio src="audio/mp3/AmzonConnect.mp3" />
+		</div>
+	<div id="click-buttun">
+		<input type="button" value="Click to show Answer" onclick="ClickButtun(ar[seq - 1]);"/>
+	</div>
+	<div> <!--image-->
+			<div class="image-box" id="i0">
+				<img src="img/AmazonWorkDocs.png" />
+			</div>
+			<div class="image-box" id="i1">
+				<img src="img/AmazonWorkMail.png" />
+			</div>
+			<div class="image-box" id="i2">
+				<img src="img/AmazonWorkSpaces.png" />
+			</div>
+			<div class="image-box" id="i3">
+				<img src="img/AmazonEMR.png" />
+			</div>
+			<div class="image-box" id="i4">
+				<img src="img/AmazonElasticsearch.png" />
+			</div>
+			<div class="image-box" id="i5">
+				<img src="img/AmazonMachineLearning.png" />
+			</div>
+			<div class="image-box" id="i6">
+				<img src="img/AmazonQuickSight.png" />
+			</div>
+			<div class="image-box" id="i7">
+				<img src="img/DataPipeline.png" />
+			</div>
+			<div class="image-box" id="i8">
+				<img src="img/Kinesis.png" />
+			</div>
+			<div class="image-box" id="i9">
+				<img src="img/APIGateway.png" />
+			</div>
+			<div class="image-box" id="i10">
+				<img src="img/AmazonCloudSearch.png" />
+			</div>
+			<div class="image-box" id="i11">
+				<img src="img/AmazonElasticTranscoder.png" />
+			</div>
+			<div class="image-box" id="i12">
+				<img src="img/AmazonSES.png" />
+			</div>
+			<div class="image-box" id="i13">
+				<img src="img/AmazonSQS.png" />
+			</div>
+			<div class="image-box" id="i14">
+				<img src="img/AmazonSWF.png" />
+			</div>
+			<div class="image-box" id="i15">
+				<img src="img/AppStream.png" />
+			</div>
+			<div class="image-box" id="i16">
+				<img src="img/AmazonEC2.png" />
+			</div>
+			<div class="image-box" id="i17">
+				<img src="img/AmazonEC2ContainerRegistry.png" />
+			</div>
+			<div class="image-box" id="i18">
+				<img src="img/AmazonEC2ContainerService.png" />
+			</div>
+			<div class="image-box" id="i19">
+				<img src="img/AMI.png" />
+			</div>
+			<div class="image-box" id="i20">
+				<img src="img/ElasticBeanstalk.png" />
+			</div>
+			<div class="image-box" id="i21">
+				<img src="img/ElasticLoadBalancing.png" />
+			</div>
+			<div class="image-box" id="i22">
+				<img src="img/Lambda.png" />
+			</div>
+			<div class="image-box" id="i23">
+				<img src="img/AWSDatabaseMigrationService.png" />
+			</div>
+			<div class="image-box" id="i24">
+				<img src="img/AmazonElasticCache.png" />
+			</div>
+			<div class="image-box" id="i25">
+				<img src="img/AmazonRDS.png" />
+			</div>
+			<div class="image-box" id="i26">
+				<img src="img/AmazonRedshift.png" />
+			</div>
+			<div class="image-box" id="i27">
+				<img src="img/snapshot.png" />
+			</div>
+			<div class="image-box" id="i28">
+				<img src="img/DynamoDB.png" />
+			</div>
+			<div class="image-box" id="i29">
+				<img src="img/AWSCodeCommit.png" />
+			</div>
+			<div class="image-box" id="i30">
+				<img src="img/CodeDeploy.png" />
+			</div>
+			<div class="image-box" id="i31">
+				<img src="img/CodePipeline.png" />
+			</div>
+			<div class="image-box" id="i32">
+				<img src="img/AWS-IOT.png" />
+			</div>
+			<div class="image-box" id="i33">
+				<img src="img/CloudFormation.png" />
+			</div>
+			<div class="image-box" id="i34">
+				<img src="img/CloudTrail.png" />
+			</div>
+			<div class="image-box" id="i35">
+				<img src="img/CloudWatch.png" />
+			</div>
+			<div class="image-box" id="i36">
+				<img src="img/Config.png" />
+			</div>
+			<div class="image-box" id="i37">
+				<img src="img/OpsWorks.png" />
+			</div>
+			<div class="image-box" id="i38">
+				<img src="img/AWSMobileHub.png" />
+			</div>
+			<div class="image-box" id="i39">
+				<img src="img/Cognito.png" />
+			</div>
+			<div class="image-box" id="i40">
+				<img src="img/DeviceFarm.png" />
+			</div>
+			<div class="image-box" id="i41">
+				<img src="img/MobileAnalytics.png" />
+			</div>
+			<div class="image-box" id="i42">
+				<img src="img/SNS.png" />
+				</div>
+			<div class="image-box" id="i43">
+				<img src="img/AWSDirectConnect.png" />
+			</div>
+			<div class="image-box" id="i44">
+				<img src="img/AmazonVPC.png" />
+			</div>
+			<div class="image-box" id="i45">
+				<img src="img/Route53.png" />
+			</div>
+			<div class="image-box" id="i46">
+				<img src="img/CloudHSM.png" />
+			</div>
+			<div class="image-box" id="i47">
+				<img src="img/DirectoryService.png" />
+			</div>
+			<div class="image-box" id="i48">
+				<img src="img/IdentityAccessManagement.png" />
+			</div>
+			<div class="image-box" id="i49">
+				<img src="img/KeyManagementService.png" />
+			</div>
+			<div class="image-box" id="i50">
+				<img src="img/ServiceCatalog.png" />
+			</div>
+			<div class="image-box" id="i51">
+				<img src="img/TrustedAdvisor.png" />
+			</div>
+			<div class="image-box" id="i52">
+				<img src="img/WebAppFirewall.png" />
+			</div>
+			<div class="image-box" id="i53">
+				<img src="img/AWSIMportExport.png" />
+			</div>
+			<div class="image-box" id="i54">
+				<img src="img/AmazonCloudFront.png" />
+			</div>
+			<div class="image-box" id="i55">
+				<img src="img/AmazonGlacier.png" />
+			</div>
+			<div class="image-box" id="i56">
+				<img src="img/AmazonS3.png" />
+			</div>
+			<div class="image-box" id="i57">
+				<img src="img/AmazonStorageGateway.png" />
+			</div>
+			<div class="image-box" id="i58">
+				<img src="img/EFS.png" />
+			</div>
+			<div class="image-box" id="i59">
+				<img src="img/Snowball.png" />
+			</div>
+			<div class="image-box" id="i60">
+				<img src="img/AmazonInspector.png" />
+			</div>
+			<div class="image-box" id="i61">
+				<img src="img/CertificateManager.png" />
+			</div>
+			<div class="image-box" id="i62">
+				<img src="img/AutoScaling.png" />
+			</div>
+			<div class="image-box" id="i63">
+				<img src="img/Spotinstance.png" />
+			</div>
+			<div class="image-box" id="i64">
+				<img src="img/internetgateway.png" />
+			</div>
+			<div class="image-box" id="i65">
+				<img src="img/VPNgateway.png" />
+			</div>
+			<div class="image-box" id="i66">
+				<img src="img/VPCpeering.png" />
+			</div>
+			<div class="image-box" id="i67">
+				<img src="img/hostedzone.png" />
+			</div>
+			<div class="image-box" id="i68">
+				<img src="img/bucket.png" />
+			</div>
+			<div class="image-box" id="i69">
+				<img src="img/edgelocation.png" />
+			</div>
+			<div class="image-box" id="i70">
+				<img src="img/AmazonEBS.png" />
+			</div>
+			<div class="image-box" id="i71">
+				<img src="img/AWSArtifact.png" />
+			</div>
+			<div class="image-box" id="i72">
+				<img src="img/AWSBatch.png" />
+			</div>
+			<div class="image-box" id="i73">
+				<img src="img/AWSApplicationDiscoveryService.png" />
+			</div>
+			<div class="image-box" id="i74">
+				<img src="img/AWSCodeBuild.png" />
+			</div>
+			<div class="image-box" id="i75">
+				<img src="img/AWSGreengrass.png" />
+			</div>
+			<div class="image-box" id="i76">
+				<img src="img/AWSManagedServices.png" />
+			</div>
+			<div class="image-box" id="i77">
+				<img src="img/AWSOrganizations.png" />
+			</div>
+			<div class="image-box" id="i78">
+				<img src="img/AWSServerMigrationService.png" />
+			</div>
+			<div class="image-box" id="i79">
+				<img src="img/AWSShield.png" />
+			</div>
+			<div class="image-box" id="i80">
+				<img src="img/AWSStepFunctions.png" />
+			</div>
+			<div class="image-box" id="i81">
+				<img src="img/AWSX-Ray.png" />
+			</div>
+			<div class="image-box" id="i82">
+				<img src="img/AmazonAthena.png" />
+			</div>
+			<div class="image-box" id="i83">
+				<img src="img/AmazonGameLift.png" />
+			</div>
+			<div class="image-box" id="i84">
+				<img src="img/AmazonLex.png" />
+			</div>
+			<div class="image-box" id="i85">
+				<img src="img/AmazonLightsail.png" />
+			</div>
+			<div class="image-box" id="i86">
+				<img src="img/AmazonPinpoint.png" />
+			</div>
+			<div class="image-box" id="i87">
+				<img src="img/AmazonPolly.png" />
+			</div>
+			<div class="image-box" id="i88">
+				<img src="img/AmazonRekognition.png" />
+			</div>
+			<div class="image-box" id="i89">
+				<img src="img/AmazonChime.png" />
+			</div>
+			<div class="image-box" id="i90">
+				<img src="img/AmazonMacie.png" />
+			</div>
+			<div class="image-box" id="i91">
+				<img src="img/AmzonConnect.png" />
+			</div>
+		</div>
+	</body>
+</html>
